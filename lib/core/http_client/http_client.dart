@@ -1,5 +1,6 @@
-import 'package:appflix/core/http_client/utils/http_keys.dart';
 import 'package:http/http.dart';
+
+import 'utils/http_keys.dart';
 
 abstract class IHttpClient {
   Future<Response> get(String endpoint, {Map<String, dynamic>? queryParameters});

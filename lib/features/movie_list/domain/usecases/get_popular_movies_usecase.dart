@@ -1,7 +1,8 @@
-import 'package:appflix/core/errors/failures.dart';
-import 'package:appflix/features/movie_list/domain/entities/movie_list.dart';
-import 'package:appflix/features/movie_list/domain/repositories/i_movie_list_repository.dart';
 import 'package:dartz/dartz.dart';
+
+import '../../../../core/errors/failures.dart';
+import '../entities/movie_list.dart';
+import '../repositories/i_movie_list_repository.dart';
 
 class GetPopularMoviesUsecase {
   final IMovieListRepository repository;
