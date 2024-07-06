@@ -3,10 +3,13 @@ import 'dart:io' as io;
 import 'package:appflix/core/http_client/http_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart';
+
+import 'di.dart' as di;
 
 void main() async {
   await dotenv.load(fileName: ".env");
+  await di.init();
+
   io.HttpOverrides.global = MyHttpOverrides();
 
   runApp(const MyApp());
@@ -41,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() async {
-    final client = HttpClient(Client());
+    final client = di.sl<IHttpClient>();
     await client.get("3/movie/now_playing", queryParameters: {"language": "en-US", "page": "1"});
 
     setState(() {
