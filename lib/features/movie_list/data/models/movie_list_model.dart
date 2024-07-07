@@ -12,7 +12,9 @@ class MovieListModel extends Equatable {
   final DateRangeModel? dates;
   final int page;
   final List<MovieModel> results;
+  @JsonKey(name: "total_pages")
   final int totalPages;
+  @JsonKey(name: "total_results")
   final int totalResults;
 
   const MovieListModel({
