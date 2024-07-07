@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/movie.dart';
-import '../../domain/entities/movie_list.dart';
 import '../../domain/usecases/get_movie_list_usecase.dart';
 import '../../utils/movie_list_type.dart';
 
