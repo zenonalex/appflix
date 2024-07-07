@@ -8,7 +8,7 @@ class MovieList extends Equatable {
   final int page;
   final List<Movie> results;
   final int totalPages;
-  final double totalResults;
+  final int totalResults;
 
   const MovieList({
     required this.dates,
