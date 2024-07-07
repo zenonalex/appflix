@@ -4,7 +4,7 @@ import 'date_range.dart';
 import 'movie.dart';
 
 class MovieList extends Equatable {
-  final DateRange dates;
+  final DateRange? dates;
   final int page;
   final List<Movie> results;
   final int totalPages;
