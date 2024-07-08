@@ -3,35 +3,47 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../../core/foundations/colors/app_colors.dart';
+import '../../core/foundations/spacings/app_spacing.dart';
 import '../../core/foundations/typography/app_typography.dart';
 
 class VoteIndicator extends StatelessWidget {
   final double voteAverage;
-  final double radius;
-  final double lineWidth;
 
   const VoteIndicator({
     super.key,
     required this.voteAverage,
-    required this.radius,
-    required this.lineWidth,
   });
 
   @override
   Widget build(BuildContext context) {
     final percentage = voteAverage * 10;
 
-    return CustomPaint(
-      size: Size(2 * radius, 2 * radius),
-      painter: _VoteIndicatorPainter(
-        percentage: percentage,
-        lineWidth: lineWidth,
+    return Container(
+        width: AppSpacing.size08,
+        height: AppSpacing.size08,
+        decoration: const BoxDecoration(
+          color: AppColors.main,
+          shape: BoxShape.circle,
+        ),
+      child: Container(
+        width: AppSpacing.size05,
+        height: AppSpacing.size05,
+        decoration: const BoxDecoration(
+          color: AppColors.main,
+          shape: BoxShape.circle,
+        ),
+        child: CustomPaint(
+          painter: _VoteIndicatorPainter(
+            percentage: percentage,
+            lineWidth: AppSpacing.size,
+          ),
+          child: Center(
+              child: Text(
+            voteAverage.toStringAsFixed(1),
+            style: AppTypography.voteIndicatorText,
+          )),
+        ),
       ),
-      child: Center(
-          child: Text(
-        voteAverage.toStringAsFixed(1),
-        style: AppTypography.voteIndicatorText,
-      )),
     );
   }
 }

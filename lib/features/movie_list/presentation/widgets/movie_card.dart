@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../commons/widgets/vote_indicator.dart';
-import '../../../../core/foundations/colors/app_colors.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
@@ -56,15 +55,7 @@ class MovieCard extends StatelessWidget {
           Positioned(
             top: 209,
             left: AppSpacing.size03,
-            child: Container(
-              width: AppSpacing.size08,
-              height: AppSpacing.size08,
-              decoration: const BoxDecoration(
-                color: AppColors.main,
-                shape: BoxShape.circle,
-              ),
-              child: VoteIndicator(voteAverage: movie.voteAverage, radius: 0, lineWidth: AppSpacing.size),
-            ),
+            child: VoteIndicator(voteAverage: movie.voteAverage),
           )
         ],
       ),
