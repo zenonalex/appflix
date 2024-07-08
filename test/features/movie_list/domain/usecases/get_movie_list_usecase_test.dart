@@ -30,11 +30,11 @@ void main() {
 
   test('[GetMovieListUsecase] - should correctly call the repository when the usecase is called', () async {
     //Arrange
-    when(() => repository.getMovieList(any(), any())).thenAnswer((_) async => Right(movieList));
+    when(() => repository.getMovieList(any(), any(), any())).thenAnswer((_) async => Right(movieList));
     //Act
     await usecase(type: MovieListType.popular, page: 1);
     //Assert
-    verify(() => repository.getMovieList(MovieListType.popular, 1));
+    verify(() => repository.getMovieList(MovieListType.popular, 1, null));
     verifyNoMoreInteractions(repository);
   });
 }

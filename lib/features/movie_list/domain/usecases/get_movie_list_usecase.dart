@@ -10,7 +10,11 @@ class GetMovieListUsecase {
 
   GetMovieListUsecase(this.repository);
 
-  Future<Either<Failure, MovieList>> call({required MovieListType type, required int page}) async {
-    return await repository.getMovieList(type, page);
+  Future<Either<Failure, MovieList>> call({
+    required MovieListType type,
+    required int page,
+    String? query,
+  }) async {
+    return await repository.getMovieList(type, page, query);
   }
 }

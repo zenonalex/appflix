@@ -29,7 +29,7 @@ void main() {
       when(() => client.get(any(), queryParameters: any(named: 'queryParameters')))
           .thenAnswer((_) async => Response(fixture('movie_list.json'), HttpStatus.ok));
       //Act
-      final result = await dataSource.getMovieList(MovieListType.popular, 1);
+      final result = await dataSource.getMovieList(MovieListType.popular, 1, null);
       //Assert
       expect(result, MovieListModel.fromJson(json.decode(fixture('movie_list.json'))));
     });
@@ -40,7 +40,7 @@ void main() {
           .thenAnswer((_) async => Response('', HttpStatus.serviceUnavailable));
       //Act
       //Assert
-      expect(() => dataSource.getMovieList(MovieListType.popular, 1), throwsA(const ServerException()));
+      expect(() => dataSource.getMovieList(MovieListType.popular, 1, null), throwsA(const ServerException()));
     });
   });
 }

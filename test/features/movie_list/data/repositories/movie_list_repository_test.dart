@@ -36,34 +36,34 @@ void main() {
   group("[MovieListRepository] ", () {
     test("should returns Right when datasource was called correctly.", () async {
       //Arrange
-      when(() => dataSource.getMovieList(any(), any())).thenAnswer((_) async => movieListModel);
+      when(() => dataSource.getMovieList(any(), any(), any())).thenAnswer((_) async => movieListModel);
       //Act
-      final result = await repository.getMovieList(MovieListType.popular, 1);
+      final result = await repository.getMovieList(MovieListType.popular, 1, null);
       //Assert
       expect(result, Right(movieList));
-      verify(() => dataSource.getMovieList(MovieListType.popular, 1));
+      verify(() => dataSource.getMovieList(MovieListType.popular, 1, null));
       verifyNoMoreInteractions(dataSource);
     });
 
     test("should return a Left(NetworkFailure) when the datasource throws a NetworkException.", () async {
       //Arrange
-      when(() => dataSource.getMovieList(any(), any())).thenThrow(const NetworkException());
+      when(() => dataSource.getMovieList(any(), any(), any())).thenThrow(const NetworkException());
       //Act
-      final result = await repository.getMovieList(MovieListType.popular, 1);
+      final result = await repository.getMovieList(MovieListType.popular, 1, null);
       //Assert
       expect(result, const Left(NetworkFailure()));
-      verify(() => dataSource.getMovieList(MovieListType.popular, 1));
+      verify(() => dataSource.getMovieList(MovieListType.popular, 1, null));
       verifyNoMoreInteractions(dataSource);
     });
 
     test("should return a Left(ServerFailure) when the datasource throws a ServerException.", () async {
       //Arrange
-      when(() => dataSource.getMovieList(any(), any())).thenThrow(const ServerException());
+      when(() => dataSource.getMovieList(any(), any(), any())).thenThrow(const ServerException());
       //Act
-      final result = await repository.getMovieList(MovieListType.popular, 1);
+      final result = await repository.getMovieList(MovieListType.popular, 1,null);
       //Assert
       expect(result, const Left(ServerFailure()));
-      verify(() => dataSource.getMovieList(MovieListType.popular, 1));
+      verify(() => dataSource.getMovieList(MovieListType.popular, 1, null));
       verifyNoMoreInteractions(dataSource);
     });
   });

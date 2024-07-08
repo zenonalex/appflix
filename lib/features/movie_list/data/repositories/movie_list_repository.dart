@@ -14,9 +14,9 @@ class MovieListRepository implements IMovieListRepository {
   MovieListRepository(this.dataSource);
 
   @override
-  Future<Either<Failure, MovieList>> getMovieList(MovieListType type, int page) async {
+  Future<Either<Failure, MovieList>> getMovieList(MovieListType type, int page, String? query) async {
     try {
-      final result = await dataSource.getMovieList(type, page);
+      final result = await dataSource.getMovieList(type, page, query);
 
       return Right(result.toEntity());
     } on NetworkException {

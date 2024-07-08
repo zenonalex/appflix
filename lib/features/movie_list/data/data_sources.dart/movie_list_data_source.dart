@@ -7,7 +7,7 @@ import '../../utils/movie_list_type.dart';
 import '../models/movie_list_model.dart';
 
 abstract class IMovieListDataSource {
-  Future<MovieListModel> getMovieList(MovieListType type, int page);
+  Future<MovieListModel> getMovieList(MovieListType type, int page, String? query);
 }
 
 class MovieListDataSource implements IMovieListDataSource {
@@ -16,15 +16,21 @@ class MovieListDataSource implements IMovieListDataSource {
   MovieListDataSource(this.client);
 
   @override
-  Future<MovieListModel> getMovieList(MovieListType type, int page) async {
-    final response = await client.get(type.endpoint, queryParameters: {"page": page.toString()});
+  Future<MovieListModel> getMovieList(MovieListType type, int page, String? query) async {
+    final response = await client.get(
+      type.endpoint,
+      queryParameters: {
+        "page": page.toString(),
+        "query": query,
+      },
+    );
 
     switch (response.statusCode) {
-        case HttpStatus.ok:
-          final responseJson = jsonDecode(response.body);
-          return MovieListModel.fromJson(responseJson);
-        default:
-          throw const ServerException();
-      }
+      case HttpStatus.ok:
+        final responseJson = jsonDecode(response.body);
+        return MovieListModel.fromJson(responseJson);
+      default:
+        throw const ServerException();
+    }
   }
 }
