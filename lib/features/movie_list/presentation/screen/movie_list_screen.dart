@@ -22,10 +22,16 @@ class MovieListScreen extends StatefulWidget {
 
 class _MovieListScreenState extends State<MovieListScreen> {
   final _movieListBloc = sl<MovieListBloc>();
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
     _movieListBloc.add(const GetMovieListEvent());
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent * 0.8) {
+        _movieListBloc.add(GetMovieListEvent(type: _movieListBloc.state.movieListType));
+      }
+    });
     super.initState();
   }
 
@@ -67,6 +73,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                             height: 350,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
+                              controller: _scrollController,
                               itemCount: state.movies.length,
                               itemBuilder: (context, index) {
                                 return Padding(
@@ -88,5 +95,11 @@ class _MovieListScreenState extends State<MovieListScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

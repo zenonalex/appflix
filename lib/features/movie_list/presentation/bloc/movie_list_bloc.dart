@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/movie.dart';
@@ -12,7 +13,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
   final GetMovieListUsecase getMovieListUsecase;
 
   MovieListBloc(this.getMovieListUsecase) : super(const MovieListState()) {
-    on<GetMovieListEvent>(_onGetMovieListEvent);
+    on<GetMovieListEvent>(_onGetMovieListEvent, transformer: droppable());
   }
 
   Future<void> _onGetMovieListEvent(GetMovieListEvent event, Emitter<MovieListState> emit) async {
@@ -34,5 +35,4 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
       ),
     );
   }
-
 }

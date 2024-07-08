@@ -9,7 +9,7 @@ part 'movie_model.g.dart';
 class MovieModel extends Equatable {
   final bool adult;
   @JsonKey(name: "backdrop_path")
-  final String backdropPath;
+  final String? backdropPath;
   @JsonKey(name: "genre_ids")
   final List<int> genreIds;
   final int id;
@@ -21,8 +21,8 @@ class MovieModel extends Equatable {
   final double popularity;
   @JsonKey(name: "poster_path")
   final String posterPath;
-  @JsonKey(name: "release_date")
-  final DateTime releaseDate;
+  @JsonKey(name: "release_date", readValue: _checkObjectValue)
+  final DateTime? releaseDate;
   final String title;
   final bool video;
   @JsonKey(name: "vote_average")
@@ -65,6 +65,10 @@ class MovieModel extends Equatable {
         voteAverage: entity.voteAverage,
         voteCount: entity.voteCount,
       );
+
+  static Object? _checkObjectValue(Map map, String key) {
+    return map[key] == '' || map[key] == null ? null : map[key];
+  }
 
   @override
   List<Object?> get props => [

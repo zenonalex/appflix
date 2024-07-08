@@ -44,7 +44,7 @@ class MovieCard extends StatelessWidget {
                       style: AppTypography.movieTitle,
                     ),
                     Text(
-                      _formatter.format(movie.releaseDate),
+                      movie.releaseDate != null ? _formatter.format(movie.releaseDate!) : 'Unknown date',
                       style: AppTypography.movieDate,
                     ),
                   ],
