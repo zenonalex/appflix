@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:appflix/features/movie_list/data/models/movie_model.dart';
-import 'package:appflix/features/movie_list/domain/entities/movie.dart';
+import 'package:appflix/commons/models/movie_model.dart';
+import 'package:appflix/commons/entities/movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../../fixtures/fixtures_reader.dart';
+import '../../fixtures/fixtures_reader.dart';
 
 void main() {
   late Movie entity;

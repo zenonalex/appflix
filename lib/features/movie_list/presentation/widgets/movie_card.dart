@@ -6,7 +6,7 @@ import '../../../../commons/widgets/vote_indicator.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
-import '../../domain/entities/movie.dart';
+import '../../../../commons/entities/movie.dart';
 import '../utils/movies_consts.dart';
 
 class MovieCard extends StatelessWidget {

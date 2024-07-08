@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:appflix/features/movie_list/data/models/movie_list_model.dart';
-import 'package:appflix/features/movie_list/data/models/movie_model.dart';
-import 'package:appflix/features/movie_list/domain/entities/movie.dart';
+import 'package:appflix/commons/models/movie_model.dart';
+import 'package:appflix/commons/entities/movie.dart';
 import 'package:appflix/features/movie_list/domain/entities/movie_list.dart';
 import 'package:flutter_test/flutter_test.dart';
 

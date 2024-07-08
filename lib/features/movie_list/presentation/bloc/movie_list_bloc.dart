@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../domain/entities/movie.dart';
+import '../../../../commons/entities/movie.dart';
 import '../../domain/usecases/get_movie_list_usecase.dart';
 import '../../utils/movie_list_type.dart';
 

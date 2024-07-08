@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../domain/entities/movie_list.dart';
 import 'date_range_model.dart';
-import 'movie_model.dart';
+import '../../../../commons/models/movie_model.dart';
 
 part 'movie_list_model.g.dart';
 

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import 'date_range.dart';
-import 'movie.dart';
+import '../../../../commons/entities/movie.dart';
 
 class MovieList extends Equatable {
   final DateRange? dates;

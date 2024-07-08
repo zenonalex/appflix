@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../domain/entities/movie.dart';
+import '../entities/movie.dart';
 
 part 'movie_model.g.dart';
 
