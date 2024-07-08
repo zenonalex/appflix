@@ -21,6 +21,26 @@ mixin AppTypography {
     fontFamily: "PTSans",
     fontWeight: FontWeight.normal,
   );
+  static const searchHintText = TextStyle(
+    fontSize: 18,
+    color: AppColors.textPlaceholder,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.normal,
+    height: 1.35,
+  );
+  static const searchText = TextStyle(
+    fontSize: 18,
+    color: AppColors.secondaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.normal,
+    height: 1.35,
+  );
+  static const searchButtonText = TextStyle(
+    fontSize: 14,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
   static const highlightButtonText = TextStyle(
     fontSize: 18,
     color: AppColors.primary,
@@ -35,6 +55,19 @@ mixin AppTypography {
   );
   static const voteIndicatorText = TextStyle(
     fontSize: 14,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
+  static const headerText = TextStyle(
+    fontSize: 30,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.normal,
+    height: 1,
+  );
+  static const headerTextBold = TextStyle(
+    fontSize: 45,
     color: AppColors.primaryText,
     fontFamily: "PTSans",
     fontWeight: FontWeight.bold,

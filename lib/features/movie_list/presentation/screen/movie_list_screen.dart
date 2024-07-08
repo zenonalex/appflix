@@ -7,11 +7,13 @@ import 'package:flutter_svg/svg.dart';
 import '../../../../core/foundations/colors/app_colors.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
+import '../../../../core/foundations/typography/app_typography.dart';
 import '../../../../di.dart';
 import '../../utils/movie_list_type.dart';
 import '../bloc/movie_list_bloc.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/movie_type_button.dart';
+import '../widgets/search_field.dart';
 
 @RoutePage()
 class MovieListScreen extends StatefulWidget {
@@ -43,72 +45,100 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: AppColors.main,
-            title: SvgPicture.asset(
-              AppImages.logo,
-              height: 30,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              backgroundColor: AppColors.main,
+              title: SvgPicture.asset(
+                AppImages.logo,
+                height: 30,
+              ),
+              floating: true,
             ),
-            floating: true,
-          ),
-          SliverToBoxAdapter(
-            child: Image.asset(AppImages.headerBackGround),
-          ),
-          SliverFillRemaining(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                const SizedBox(height: AppSpacing.size04),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
-                  child: BlocConsumer<MovieListBloc, MovieListState>(
-                      bloc: _movieListBloc,
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        return MovieTypeButton(
-                          selectedType: state.movieListType,
-                          extraType: _resolveExtraType(state.movieListType),
-                          onPressed: (type) {
-                            _movieListBloc.add(GetMovieListEvent(type: type));
-                          },
-                        );
-                      }),
-                ),
-                const SizedBox(height: AppSpacing.size04),
-                Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    SvgPicture.asset(AppImages.listBackGround, fit: BoxFit.fitWidth),
-                    BlocConsumer<MovieListBloc, MovieListState>(
+            SliverToBoxAdapter(
+              child: Stack(
+                children: [
+                  Image.asset(AppImages.headerBackGround),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: AppSpacing.size06),
+                        const Text("Welcome.", style: AppTypography.headerTextBold),
+                        const Text(
+                          "Millions of movies, TV show and people to discover. Explore now.",
+                          style: AppTypography.headerText,
+                        ),
+                        const SizedBox(height: AppSpacing.size04),
+                        SearchField(onSearchClick: (term) {
+                          print(term);
+                        }),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(height: AppSpacing.size04),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
+                    child: BlocConsumer<MovieListBloc, MovieListState>(
                         bloc: _movieListBloc,
                         listener: (context, state) {},
                         builder: (context, state) {
-                          return SizedBox(
-                            height: 350,
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              controller: _scrollController,
-                              itemCount: state.movies.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    left: index == 0 ? AppSpacing.size04 : 0.0,
-                                    right: AppSpacing.size04,
-                                  ),
-                                  child: MovieCard(movie: state.movies[index]),
-                                );
-                              },
-                            ),
+                          return MovieTypeButton(
+                            selectedType: state.movieListType,
+                            extraType: _resolveExtraType(state.movieListType),
+                            onPressed: (type) {
+                              _movieListBloc.add(GetMovieListEvent(type: type));
+                            },
                           );
                         }),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(height: AppSpacing.size04),
+                  Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      SvgPicture.asset(AppImages.listBackGround, fit: BoxFit.fitWidth),
+                      BlocConsumer<MovieListBloc, MovieListState>(
+                          bloc: _movieListBloc,
+                          listener: (context, state) {},
+                          builder: (context, state) {
+                            return SizedBox(
+                              height: 350,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                controller: _scrollController,
+                                itemCount: state.movies.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(
+                                      left: index == 0 ? AppSpacing.size04 : 0.0,
+                                      right: AppSpacing.size04,
+                                    ),
+                                    child: MovieCard(movie: state.movies[index]),
+                                  );
+                                },
+                              ),
+                            );
+                          }),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 mixin AppColors {
   // General
   static const main = Color(0xFF082138);
+  static const background = Color(0xFFFFFFFF);
   static const primary = Color(0xFF22CDA4);
   static const shadow = Color(0xFF11ACD8);
   static const lowRate = Color(0xFFf80707);
