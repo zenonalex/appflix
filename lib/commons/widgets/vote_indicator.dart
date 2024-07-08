@@ -25,24 +25,16 @@ class VoteIndicator extends StatelessWidget {
         color: AppColors.main,
         shape: BoxShape.circle,
       ),
-      child: Container(
-        width: AppSpacing.size05,
-        height: AppSpacing.size05,
-        decoration: const BoxDecoration(
-          color: AppColors.main,
-          shape: BoxShape.circle,
+      child: CustomPaint(
+        painter: _VoteIndicatorPainter(
+          percentage: percentage,
+          lineWidth: AppSpacing.size,
         ),
-        child: CustomPaint(
-          painter: _VoteIndicatorPainter(
-            percentage: percentage,
-            lineWidth: AppSpacing.size,
-          ),
-          child: Center(
-              child: Text(
-            voteAverage.toStringAsFixed(1),
-            style: AppTypography.voteIndicatorText,
-          )),
-        ),
+        child: Center(
+            child: Text(
+          voteAverage.toStringAsFixed(1),
+          style: AppTypography.voteIndicatorText,
+        )),
       ),
     );
   }
@@ -64,7 +56,7 @@ class _VoteIndicatorPainter extends CustomPainter {
     final radius = min(size.width / 2, size.height / 2);
 
     final backgroundPaint = Paint()
-      ..color = percentage == 0.0 ? AppColors.lowRate : Colors.grey[300]!
+      ..color = percentage == 0.0 ? AppColors.main : Colors.grey[300]!
       ..style = PaintingStyle.stroke
       ..strokeWidth = lineWidth;
 

@@ -26,6 +26,7 @@ class MovieListScreen extends StatefulWidget {
 class _MovieListScreenState extends State<MovieListScreen> {
   final _movieListBloc = sl<MovieListBloc>();
   final _scrollController = ScrollController();
+  final _textController = TextEditingController();
 
   @override
   void initState() {
@@ -75,9 +76,12 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           style: AppTypography.headerText,
                         ),
                         const SizedBox(height: AppSpacing.size04),
-                        SearchField(onSearchClick: (term) {
-                          _movieListBloc.add(GetMovieListEvent(type: MovieListType.search, term: term));
-                        }),
+                        SearchField(
+                          controller: _textController,
+                          onSearchClick: (term) {
+                            _movieListBloc.add(GetMovieListEvent(type: MovieListType.search, term: term));
+                          },
+                        ),
                       ],
                     ),
                   ),
@@ -102,6 +106,10 @@ class _MovieListScreenState extends State<MovieListScreen> {
                             onPressed: (type) {
                               _movieListBloc.add(GetMovieListEvent(type: type));
                             },
+                            onResetSearch: () {
+                              _movieListBloc.add(ResetSearchListEvent());
+                              _textController.clear();
+                            },
                           );
                         }),
                   ),
@@ -114,6 +122,13 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           bloc: _movieListBloc,
                           listener: (context, state) {},
                           builder: (context, state) {
+                            if (state.status == MovieListStatus.empty) {
+                              return const Text(
+                                "🎬 Ops! Não encontramos nenhum filme. 🍿",
+                                style: AppTypography.collectionTitle,
+                              );
+                            }
+
                             return SizedBox(
                               height: 350,
                               child: ListView.builder(
@@ -146,6 +161,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 }

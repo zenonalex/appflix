@@ -14,6 +14,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
 
   MovieListBloc(this.getMovieListUsecase) : super(const MovieListState()) {
     on<GetMovieListEvent>(_onGetMovieListEvent, transformer: droppable());
+    on<ResetSearchListEvent>(_onResetSearchListEvent);
   }
 
   Future<void> _onGetMovieListEvent(GetMovieListEvent event, Emitter<MovieListState> emit) async {
@@ -27,24 +28,49 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
           page: 0,
           totalPages: 0,
           totalResults: 0,
+          searchTerm: null,
         ),
       );
     }
 
-    final result = await getMovieListUsecase(type: event.type, page: state.page + 1, query: event.term);
+    if (state.totalPages > 0 && state.page == state.totalPages) return;
+
+    final result = await getMovieListUsecase(
+      type: event.type,
+      page: state.page + 1,
+      query: event.term ?? state.searchTerm,
+    );
 
     result.fold(
       (failure) => emit(state.copyWith(status: MovieListStatus.failure)),
-      (movieList) => emit(
-        state.copyWith(
-          status: MovieListStatus.success,
-          movies: List.of(state.movies)..addAll(movieList.results),
-          movieListType: event.type,
-          page: movieList.page,
-          totalPages: movieList.totalPages,
-          totalResults: movieList.totalResults,
-        ),
+      (movieList) {
+        emit(
+          state.copyWith(
+            status: movieList.results.isNotEmpty ? MovieListStatus.success : MovieListStatus.empty,
+            movies: List.of(state.movies)..addAll(movieList.results),
+            movieListType: event.type,
+            page: movieList.page,
+            totalPages: movieList.totalPages,
+            totalResults: movieList.totalResults,
+            searchTerm: event.term,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<void> _onResetSearchListEvent(ResetSearchListEvent event, Emitter<MovieListState> emit) async {
+    emit(
+      state.copyWith(
+        movieListType: MovieListType.popular,
+        movies: [],
+        page: 0,
+        totalPages: 0,
+        totalResults: 0,
+        searchTerm: null,
       ),
     );
+
+    add(const GetMovieListEvent());
   }
 }

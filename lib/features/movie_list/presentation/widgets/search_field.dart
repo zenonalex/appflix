@@ -5,17 +5,16 @@ import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
 
 class SearchField extends StatefulWidget {
+  final TextEditingController controller;
   final Function(String) onSearchClick;
 
-  const SearchField({super.key, required this.onSearchClick});
+  const SearchField({super.key, required this.controller, required this.onSearchClick});
 
   @override
   State<SearchField> createState() => _SearchFieldState();
 }
 
 class _SearchFieldState extends State<SearchField> {
-  final _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -30,7 +29,7 @@ class _SearchFieldState extends State<SearchField> {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.size, horizontal: AppSpacing.size05),
             child: TextField(
-              controller: _textController,
+              controller: widget.controller,
               style: AppTypography.searchText,
               textAlign: TextAlign.start,
               decoration: const InputDecoration(
@@ -44,7 +43,7 @@ class _SearchFieldState extends State<SearchField> {
         ),
         InkWell(
           onTap: () {
-            widget.onSearchClick(_textController.text);
+            widget.onSearchClick(widget.controller.text);
           },
           child: Container(
             width: 100,
@@ -63,11 +62,5 @@ class _SearchFieldState extends State<SearchField> {
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
   }
 }

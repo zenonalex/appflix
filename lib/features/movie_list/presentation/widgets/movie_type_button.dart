@@ -9,12 +9,14 @@ class MovieTypeButton extends StatefulWidget {
   final MovieListType selectedType;
   final MovieListType extraType;
   final Function(MovieListType) onPressed;
+  final Function() onResetSearch;
 
   const MovieTypeButton({
     super.key,
     required this.selectedType,
     required this.extraType,
     required this.onPressed,
+    required this.onResetSearch,
   });
 
   @override
@@ -26,6 +28,35 @@ class _MovieTypeButtonState extends State<MovieTypeButton> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.selectedType == MovieListType.search) {
+      return GestureDetector(
+        onTap: () {
+          widget.onResetSearch();
+        },
+        child: Container(
+          width: 150,
+          height: AppSpacing.size08,
+          decoration: BoxDecoration(
+            color: AppColors.main,
+            borderRadius: BorderRadius.circular(AppSpacing.size04),
+          ),
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  widget.selectedType.label,
+                  style: AppTypography.highlightButtonText,
+                ),
+                const SizedBox(width: AppSpacing.size02),
+                const Icon(Icons.close_outlined, color: AppColors.primary, size: AppSpacing.size05),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Stack(
       children: [
         AnimatedContainer(

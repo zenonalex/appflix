@@ -16,3 +16,5 @@ class GetMovieListEvent extends MovieListEvent {
     this.term,
   });
 }
+
+class ResetSearchListEvent extends MovieListEvent {}
