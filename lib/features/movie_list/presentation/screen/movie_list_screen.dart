@@ -8,6 +8,7 @@ import '../../../../core/foundations/colors/app_colors.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../di.dart';
+import '../../utils/movie_list_type.dart';
 import '../bloc/movie_list_bloc.dart';
 import '../widgets/movie_card.dart';
 import '../widgets/movie_type_button.dart';
@@ -35,6 +36,10 @@ class _MovieListScreenState extends State<MovieListScreen> {
     super.initState();
   }
 
+  MovieListType _resolveExtraType(MovieListType selectedType) {
+    return selectedType == MovieListType.popular ? MovieListType.topRated : MovieListType.popular;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +63,18 @@ class _MovieListScreenState extends State<MovieListScreen> {
                 const SizedBox(height: AppSpacing.size04),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
-                  child: MovieTypeButton(title: 'Trending', onPressed: () {}),
+                  child: BlocConsumer<MovieListBloc, MovieListState>(
+                      bloc: _movieListBloc,
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        return MovieTypeButton(
+                          selectedType: state.movieListType,
+                          extraType: _resolveExtraType(state.movieListType),
+                          onPressed: (type) {
+                            print(type.label);
+                          },
+                        );
+                      }),
                 ),
                 const SizedBox(height: AppSpacing.size04),
                 Stack(

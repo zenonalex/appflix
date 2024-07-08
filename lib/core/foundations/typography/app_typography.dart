@@ -27,6 +27,12 @@ mixin AppTypography {
     fontFamily: "PTSans",
     fontWeight: FontWeight.bold,
   );
+  static const invertedtButtonText = TextStyle(
+    fontSize: 18,
+    color: AppColors.secondaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
   static const voteIndicatorText = TextStyle(
     fontSize: 14,
     color: AppColors.primaryText,
