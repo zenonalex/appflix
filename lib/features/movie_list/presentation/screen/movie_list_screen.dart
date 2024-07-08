@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -58,14 +59,27 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   alignment: AlignmentDirectional.center,
                   children: [
                     SvgPicture.asset(AppImages.listBackGround, fit: BoxFit.fitWidth),
-                    const Row(
-                      children: [
-                        SizedBox(
-                          width: 150,
-                          child: MovieCard(),
-                        ),
-                      ],
-                    ),
+                    BlocConsumer<MovieListBloc, MovieListState>(
+                        bloc: _movieListBloc,
+                        listener: (context, state) {},
+                        builder: (context, state) {
+                          return SizedBox(
+                            height: 350,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.movies.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(
+                                    left: index == 0 ? AppSpacing.size04 : 0.0,
+                                    right: AppSpacing.size04,
+                                  ),
+                                  child: MovieCard(movie: state.movies[index]),
+                                );
+                              },
+                            ),
+                          );
+                        }),
                   ],
                 ),
               ],
