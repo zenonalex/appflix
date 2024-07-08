@@ -20,7 +20,7 @@ class MovieModel extends Equatable {
   final String overview;
   final double popularity;
   @JsonKey(name: "poster_path")
-  final String posterPath;
+  final String? posterPath;
   @JsonKey(name: "release_date", readValue: _checkObjectValue)
   final DateTime? releaseDate;
   final String title;

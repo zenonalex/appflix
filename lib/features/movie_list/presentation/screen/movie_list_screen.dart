@@ -47,7 +47,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
     return Scaffold(
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         child: CustomScrollView(
           slivers: [
@@ -76,7 +76,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                         ),
                         const SizedBox(height: AppSpacing.size04),
                         SearchField(onSearchClick: (term) {
-                          print(term);
+                          _movieListBloc.add(GetMovieListEvent(type: MovieListType.search, term: term));
                         }),
                       ],
                     ),

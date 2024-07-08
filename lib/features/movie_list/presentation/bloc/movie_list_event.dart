@@ -9,12 +9,10 @@ sealed class MovieListEvent extends Equatable {
 
 class GetMovieListEvent extends MovieListEvent {
   final MovieListType type;
+  final String? term;
 
-  const GetMovieListEvent({this.type = MovieListType.popular});
-}
-
-class GetMovieListThisWeekEvent extends MovieListEvent {
-  final MovieListType type;
-
-  const GetMovieListThisWeekEvent({required this.type});
+  const GetMovieListEvent({
+    this.type = MovieListType.popular,
+    this.term,
+  });
 }

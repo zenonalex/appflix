@@ -22,6 +22,7 @@ class MovieListDataSource implements IMovieListDataSource {
       queryParameters: {
         "page": page.toString(),
         "query": query,
+        "include_adult": "false",
       },
     );
 

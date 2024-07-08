@@ -19,7 +19,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
   Future<void> _onGetMovieListEvent(GetMovieListEvent event, Emitter<MovieListState> emit) async {
     emit(state.copyWith(status: MovieListStatus.loading));
 
-    if (event.type != state.movieListType) {
+    if (event.type != state.movieListType || event.term != null) {
       emit(
         state.copyWith(
           movieListType: event.type,
@@ -31,7 +31,7 @@ class MovieListBloc extends Bloc<MovieListEvent, MovieListState> {
       );
     }
 
-    final result = await getMovieListUsecase(type: event.type, page: state.page + 1);
+    final result = await getMovieListUsecase(type: event.type, page: state.page + 1, query: event.term);
 
     result.fold(
       (failure) => emit(state.copyWith(status: MovieListStatus.failure)),

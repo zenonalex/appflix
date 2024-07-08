@@ -19,12 +19,12 @@ class VoteIndicator extends StatelessWidget {
     final percentage = voteAverage * 10;
 
     return Container(
-        width: AppSpacing.size08,
-        height: AppSpacing.size08,
-        decoration: const BoxDecoration(
-          color: AppColors.main,
-          shape: BoxShape.circle,
-        ),
+      width: AppSpacing.size08,
+      height: AppSpacing.size08,
+      decoration: const BoxDecoration(
+        color: AppColors.main,
+        shape: BoxShape.circle,
+      ),
       child: Container(
         width: AppSpacing.size05,
         height: AppSpacing.size05,
@@ -64,7 +64,7 @@ class _VoteIndicatorPainter extends CustomPainter {
     final radius = min(size.width / 2, size.height / 2);
 
     final backgroundPaint = Paint()
-      ..color = Colors.grey[300]!
+      ..color = percentage == 0.0 ? AppColors.lowRate : Colors.grey[300]!
       ..style = PaintingStyle.stroke
       ..strokeWidth = lineWidth;
 

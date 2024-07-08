@@ -29,7 +29,9 @@ class MovieCard extends StatelessWidget {
                 borderRadius: const BorderRadius.all(Radius.circular(AppSpacing.size)),
                 child: CachedNetworkImage(
                   height: 225,
-                  imageUrl: MoviesConsts.cardImasgeUrl + movie.posterPath,
+                  imageUrl: movie.posterPath != null
+                      ? MoviesConsts.cardImasgeUrl + movie.posterPath!
+                      : "https://i.ibb.co/jLKQ1cG/images.png",
                   placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
                 ),
               ),
