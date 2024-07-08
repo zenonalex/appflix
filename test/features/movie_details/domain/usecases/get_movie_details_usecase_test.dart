@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:appflix/commons/entities/movie.dart';
 import 'package:appflix/commons/models/movie_model.dart';
-import 'package:appflix/features/details/domain/repositories/i_movie_details_repository.dart';
-import 'package:appflix/features/details/domain/usecases/get_movie_details_usecase.dart';
+import 'package:appflix/features/movie_details/domain/repositories/i_movie_details_repository.dart';
+import 'package:appflix/features/movie_details/domain/usecases/get_movie_details_usecase.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

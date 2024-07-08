@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:appflix/commons/models/movie_model.dart';
 import 'package:appflix/core/errors/exceptions.dart';
 import 'package:appflix/core/http_client/http_client.dart';
-import 'package:appflix/features/details/data/data_sources/movie_details_data_source.dart';
+import 'package:appflix/features/movie_details/data/data_sources/movie_details_data_source.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
