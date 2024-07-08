@@ -42,7 +42,10 @@ class _MovieTypeButtonState extends State<MovieTypeButton> {
               children: [
                 InkWell(
                   onTap: () {
-                    widget.onPressed(widget.extraType);
+                    setState(() {
+                      shouldExpand = !shouldExpand;
+                      widget.onPressed(widget.extraType);
+                    });
                   },
                   child: Text(
                     widget.extraType.label,

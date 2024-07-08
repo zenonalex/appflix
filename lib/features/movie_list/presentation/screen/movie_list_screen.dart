@@ -71,7 +71,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                           selectedType: state.movieListType,
                           extraType: _resolveExtraType(state.movieListType),
                           onPressed: (type) {
-                            print(type.label);
+                            _movieListBloc.add(GetMovieListEvent(type: type));
                           },
                         );
                       }),
