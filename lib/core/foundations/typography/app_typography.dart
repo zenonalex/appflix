@@ -27,4 +27,10 @@ mixin AppTypography {
     fontFamily: "PTSans",
     fontWeight: FontWeight.bold,
   );
+  static const voteIndicatorText = TextStyle(
+    fontSize: 14,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
 }
