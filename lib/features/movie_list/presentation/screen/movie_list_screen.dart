@@ -1,5 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../../core/foundations/colors/app_colors.dart';
+import '../../../../core/foundations/images/app_images.dart';
+import '../../../../core/foundations/spacings/app_spacing.dart';
+import '../../../../di.dart';
+import '../bloc/movie_list_bloc.dart';
+import '../widgets/movie_card.dart';
+import '../widgets/movie_type_button.dart';
 
 @RoutePage()
 class MovieListScreen extends StatefulWidget {
@@ -10,66 +20,59 @@ class MovieListScreen extends StatefulWidget {
 }
 
 class _MovieListScreenState extends State<MovieListScreen> {
-  int _counter = 0;
+  final _movieListBloc = sl<MovieListBloc>();
 
-  void _incrementCounter() async {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    _movieListBloc.add(const GetMovieListEvent());
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MovieListScreen object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: const Text("AppFlix"),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            backgroundColor: AppColors.main,
+            title: SvgPicture.asset(
+              AppImages.logo,
+              height: 30,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            floating: true,
+          ),
+          SliverToBoxAdapter(
+            child: Image.asset(AppImages.headerBackGround),
+          ),
+          SliverFillRemaining(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: AppSpacing.size04),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
+                  child: MovieTypeButton(title: 'Trending', onPressed: () {}),
+                ),
+                const SizedBox(height: AppSpacing.size04),
+                Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    SvgPicture.asset(AppImages.listBackGround, fit: BoxFit.fitWidth),
+                    const Row(
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: MovieCard(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
