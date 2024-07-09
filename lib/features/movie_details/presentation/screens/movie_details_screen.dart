@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../commons/widgets/custom_app_bar.dart';
+
 @RoutePage()
 class MovieDetailsScreen extends StatefulWidget {
   final int movieId;
@@ -14,8 +16,12 @@ class MovieDetailsScreen extends StatefulWidget {
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(color: Colors.amber),
+    return const Scaffold(
+      body: CustomScrollView(
+        slivers: [
+          CustomAppBar(hasBackButton: true),
+        ],
+      ),
     );
   }
 }

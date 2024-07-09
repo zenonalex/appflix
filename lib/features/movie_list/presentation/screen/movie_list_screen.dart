@@ -138,7 +138,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
                                     child: MovieCard(
                                       movie: state.movies[index],
                                       onPressed: () {
-                                        context.pushRoute(MovieDetailsRoute(movieId: state.movies[index].id));
+                                        AutoRouter.of(context).push(MovieDetailsRoute(movieId: state.movies[index].id));
                                       },
                                     ),
                                   );
