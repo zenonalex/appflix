@@ -11,7 +11,7 @@ class MovieModel extends Equatable {
   @JsonKey(name: "backdrop_path")
   final String? backdropPath;
   @JsonKey(name: "genre_ids")
-  final List<int> genreIds;
+  final List<int>? genreIds;
   final int id;
   @JsonKey(name: "original_language")
   final String originalLanguage;

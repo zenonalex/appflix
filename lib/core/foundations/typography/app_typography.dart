@@ -72,4 +72,22 @@ mixin AppTypography {
     fontFamily: "PTSans",
     fontWeight: FontWeight.bold,
   );
+  static const title = TextStyle(
+    fontSize: 20,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
+  static const subtitle = TextStyle(
+    fontSize: 18,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.normal,
+  );
+  static const subtitleBold = TextStyle(
+    fontSize: 18,
+    color: AppColors.primaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
 }

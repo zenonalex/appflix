@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 
 import '../../../../commons/entities/movie.dart';
 import '../../../../commons/widgets/vote_indicator.dart';
+import '../../../../core/consts/movies_consts.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
-import '../utils/movies_consts.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -36,7 +36,7 @@ class MovieCard extends StatelessWidget {
                     height: 225,
                     imageUrl: movie.posterPath != null
                         ? MoviesConsts.cardImasgeUrl + movie.posterPath!
-                        : "https://i.ibb.co/jLKQ1cG/images.png",
+                        : MoviesConsts.placeholderImasgeUrl,
                     placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
                   ),
                 ),

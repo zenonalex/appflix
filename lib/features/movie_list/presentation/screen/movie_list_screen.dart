@@ -90,9 +90,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
                   const SizedBox(height: AppSpacing.size04),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
-                    child: BlocConsumer<MovieListBloc, MovieListState>(
+                    child: BlocBuilder<MovieListBloc, MovieListState>(
                         bloc: _movieListBloc,
-                        listener: (context, state) {},
                         builder: (context, state) {
                           return MovieTypeButton(
                             selectedType: state.movieListType,
@@ -112,9 +111,8 @@ class _MovieListScreenState extends State<MovieListScreen> {
                     alignment: AlignmentDirectional.center,
                     children: [
                       SvgPicture.asset(AppImages.listBackGround, fit: BoxFit.fitWidth),
-                      BlocConsumer<MovieListBloc, MovieListState>(
+                      BlocBuilder<MovieListBloc, MovieListState>(
                           bloc: _movieListBloc,
-                          listener: (context, state) {},
                           builder: (context, state) {
                             if (state.status == MovieListStatus.empty) {
                               return const Text(
