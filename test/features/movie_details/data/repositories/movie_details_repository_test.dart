@@ -5,7 +5,9 @@ import 'package:appflix/commons/models/movie_model.dart';
 import 'package:appflix/core/errors/exceptions.dart';
 import 'package:appflix/core/errors/failures.dart';
 import 'package:appflix/features/movie_details/data/data_sources/movie_details_data_source.dart';
+import 'package:appflix/features/movie_details/data/models/cast_model.dart';
 import 'package:appflix/features/movie_details/data/repositories/movie_details_repository.dart';
+import 'package:appflix/features/movie_details/domain/entities/cast.dart';
 import 'package:appflix/features/movie_details/domain/repositories/i_movie_details_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -20,15 +22,19 @@ void main() {
   late IMovieDetailsDataSource dataSource;
   late Movie movie;
   late MovieModel movieModel;
+  late Cast cast;
+  late CastModel castModel;
 
   setUp(() {
     dataSource = MockMovieDetailsDataSource();
     repository = MovieDetailsRepository(dataSource);
     movieModel = MovieModel.fromJson(jsonDecode(fixture('movie.json')));
     movie = movieModel.toEntity();
+    castModel = CastModel.fromJson(jsonDecode(fixture('cast.json')));
+    cast = castModel.toEntity();
   });
 
-  group("[MovieDetilsRepository] ", () {
+  group("[getMovieDetails] ", () {
     test("should returns Right when datasource was called correctly.", () async {
       //Arrange
       when(() => dataSource.getMovieDetails(any())).thenAnswer((_) async => movieModel);
@@ -59,6 +65,41 @@ void main() {
       //Assert
       expect(result, const Left(ServerFailure()));
       verify(() => dataSource.getMovieDetails(832));
+      verifyNoMoreInteractions(dataSource);
+    });
+  });
+
+  group("[getMovieDetails] ", () {
+    test("should returns Right when datasource was called correctly.", () async {
+      //Arrange
+      when(() => dataSource.getMovieCredits(any())).thenAnswer((_) async => castModel);
+      //Act
+      final result = await repository.getMovieCredits(832);
+      //Assert
+      expect(result, Right(cast));
+      verify(() => dataSource.getMovieCredits(832));
+      verifyNoMoreInteractions(dataSource);
+    });
+
+    test("should return a Left(NetworkFailure) when the datasource throws a NetworkException.", () async {
+      //Arrange
+      when(() => dataSource.getMovieCredits(any())).thenThrow(const NetworkException());
+      //Act
+      final result = await repository.getMovieCredits(832);
+      //Assert
+      expect(result, const Left(NetworkFailure()));
+      verify(() => dataSource.getMovieCredits(832));
+      verifyNoMoreInteractions(dataSource);
+    });
+
+    test("should return a Left(ServerFailure) when the datasource throws a ServerException.", () async {
+      //Arrange
+      when(() => dataSource.getMovieCredits(any())).thenThrow(const ServerException());
+      //Act
+      final result = await repository.getMovieCredits(832);
+      //Assert
+      expect(result, const Left(ServerFailure()));
+      verify(() => dataSource.getMovieCredits(832));
       verifyNoMoreInteractions(dataSource);
     });
   });

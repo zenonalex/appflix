@@ -5,6 +5,7 @@ import 'package:appflix/commons/models/movie_model.dart';
 import 'package:appflix/core/errors/exceptions.dart';
 import 'package:appflix/core/http_client/http_client.dart';
 import 'package:appflix/features/movie_details/data/data_sources/movie_details_data_source.dart';
+import 'package:appflix/features/movie_details/data/models/cast_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mocktail/mocktail.dart';
@@ -22,8 +23,8 @@ void main() {
     dataSource = MovieDetailsDataSource(client);
   });
 
-  group('[MovieDetailsDataSource] - ', () {
-    test('getMovieDetails - should return a MovieListModel when the client returns 200', () async {
+  group('[getMovieDetails] - ', () {
+    test('should return a MovieListModel when the client returns 200', () async {
       //Arrange
       when(() => client.get(any(), queryParameters: any(named: 'queryParameters')))
           .thenAnswer((_) async => Response(fixture('movie.json'), HttpStatus.ok));
@@ -33,13 +34,34 @@ void main() {
       expect(result, MovieModel.fromJson(json.decode(fixture('movie.json'))));
     });
 
-    test('getMovieDetails - should throw a ServerException when the client returns other than 200', () async {
+    test('should throw a ServerException when the client returns other than 200', () async {
       //Arrange
       when(() => client.get(any(), queryParameters: any(named: 'queryParameters')))
           .thenAnswer((_) async => Response('', HttpStatus.serviceUnavailable));
       //Act
       //Assert
       expect(() => dataSource.getMovieDetails(832), throwsA(const ServerException()));
+    });
+  });
+
+  group('[getMovieCredits] - ', () {
+    test('should return a MovieListModel when the client returns 200', () async {
+      //Arrange
+      when(() => client.get(any(), queryParameters: any(named: 'queryParameters')))
+          .thenAnswer((_) async => Response(fixture('cast.json'), HttpStatus.ok));
+      //Act
+      final result = await dataSource.getMovieCredits(832);
+      //Assert
+      expect(result, CastModel.fromJson(json.decode(fixture('cast.json'))));
+    });
+
+    test('should throw a ServerException when the client returns other than 200', () async {
+      //Arrange
+      when(() => client.get(any(), queryParameters: any(named: 'queryParameters')))
+          .thenAnswer((_) async => Response('', HttpStatus.serviceUnavailable));
+      //Act
+      //Assert
+      expect(() => dataSource.getMovieCredits(832), throwsA(const ServerException()));
     });
   });
 }

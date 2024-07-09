@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:appflix/commons/entities/movie.dart';
 import 'package:appflix/commons/models/movie_model.dart';
 import 'package:appflix/core/errors/failures.dart';
+import 'package:appflix/features/movie_details/data/models/cast_model.dart';
+import 'package:appflix/features/movie_details/domain/entities/cast.dart';
 import 'package:appflix/features/movie_details/domain/usecases/get_movie_credits_usecase.dart';
 import 'package:appflix/features/movie_details/domain/usecases/get_movie_details_usecase.dart';
 import 'package:appflix/features/movie_details/presentation/bloc/movie_details_bloc.dart';
@@ -23,6 +25,8 @@ void main() {
   late GetMovieCreditsUsecase getMovieCreditsUsecase;
   late Movie movie;
   late MovieModel movieModel;
+  late Cast cast;
+  late CastModel castModel;
 
   setUp(() {
     getMovieDetailsUsecase = MockGetMovieDetailsUsecase();
@@ -30,6 +34,8 @@ void main() {
     bloc = MovieDetailsBloc(getMovieDetailsUsecase, getMovieCreditsUsecase);
     movieModel = MovieModel.fromJson(jsonDecode(fixture('movie.json')));
     movie = movieModel.toEntity();
+    castModel = CastModel.fromJson(jsonDecode(fixture('cast.json')));
+    cast = castModel.toEntity();
   });
 
   group('[GetMovieDetailsEvent] - ', () {
@@ -43,8 +49,8 @@ void main() {
       build: () => bloc,
       act: (MovieDetailsBloc bloc) => bloc.add(const GetMovieDetailsEvent(movieId: 640146)),
       expect: () => [
-        const MovieDetailsState(status: MovieDetailsStatus.loading),
-        const MovieDetailsState(status: MovieDetailsStatus.failure),
+        const MovieDetailsState(detailsStatus: MovieDetailsStatus.loading),
+        const MovieDetailsState(detailsStatus: MovieDetailsStatus.failure),
       ],
     );
 
@@ -57,8 +63,39 @@ void main() {
       build: () => bloc,
       act: (MovieDetailsBloc bloc) => bloc.add(const GetMovieDetailsEvent(movieId: 640146)),
       expect: () => [
-        const MovieDetailsState(status: MovieDetailsStatus.loading),
-        MovieDetailsState(status: MovieDetailsStatus.success, movie: movie),
+        const MovieDetailsState(detailsStatus: MovieDetailsStatus.loading),
+        MovieDetailsState(detailsStatus: MovieDetailsStatus.success, movie: movie),
+      ],
+    );
+  });
+
+  group('[GetMovieCreditsEvent] - ', () {
+    blocTest(
+      'should emit [MovieState.loading, MovieState.failure]'
+      ' when [GetMovieCreditsEvent] return a [Left]',
+      setUp: () {
+        when(() => getMovieCreditsUsecase(movieId: any(named: 'movieId')))
+            .thenAnswer((_) async => const Left(ServerFailure()));
+      },
+      build: () => bloc,
+      act: (MovieDetailsBloc bloc) => bloc.add(const GetMovieCreditsEvent(movieId: 640146)),
+      expect: () => [
+        const MovieDetailsState(creditsStatus: MovieCreditsStatus.loading),
+        const MovieDetailsState(creditsStatus: MovieCreditsStatus.failure),
+      ],
+    );
+
+    blocTest(
+      'should emit [MovieState.loading, MovieState.success]'
+      ' when [GetMovieCreditsEvent] return a [Left]',
+      setUp: () {
+        when(() => getMovieCreditsUsecase(movieId: any(named: 'movieId'))).thenAnswer((_) async => Right(cast));
+      },
+      build: () => bloc,
+      act: (MovieDetailsBloc bloc) => bloc.add(const GetMovieCreditsEvent(movieId: 640146)),
+      expect: () => [
+        const MovieDetailsState(creditsStatus: MovieCreditsStatus.loading),
+        MovieDetailsState(creditsStatus: MovieCreditsStatus.success, cast: cast),
       ],
     );
   });
