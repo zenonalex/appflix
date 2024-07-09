@@ -16,8 +16,9 @@ import '../bloc/movie_details_bloc.dart';
 @RoutePage()
 class MovieDetailsScreen extends StatefulWidget {
   final int movieId;
+  final String? posterPath;
 
-  const MovieDetailsScreen({super.key, required this.movieId});
+  const MovieDetailsScreen({super.key, required this.movieId, required this.posterPath});
 
   @override
   State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
@@ -36,28 +37,27 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.secondaryBackground,
-      body: BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-          bloc: _movieDetailsBloc,
-          builder: (context, state) {
-            if (state.status == MovieDetailsStatus.loading) {
-              return const Center(child: CircularProgressIndicator(color: AppColors.background));
-            }
-
-            return CustomScrollView(
-              slivers: [
-                const CustomAppBar(hasBackButton: true),
-                SliverToBoxAdapter(
-                  child: Container(
-                    height: AppSpacing.size10,
-                    color: AppColors.background,
-                    child: const Center(child: Text("Details", style: AppTypography.collectionTitle)),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Stack(
-                    fit: StackFit.passthrough,
-                    children: [
-                      ShaderMask(
+      body: CustomScrollView(
+        slivers: [
+          const CustomAppBar(hasBackButton: true),
+          SliverToBoxAdapter(
+            child: Container(
+              height: AppSpacing.size10,
+              color: AppColors.background,
+              child: const Center(child: Text("Details", style: AppTypography.collectionTitle)),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+                    bloc: _movieDetailsBloc,
+                    builder: (context, state) {
+                      if (state.status == MovieDetailsStatus.loading) {
+                        return const SizedBox(height: 180);
+                      }
+                      return ShaderMask(
                         shaderCallback: (Rect bounds) {
                           return const LinearGradient(
                             begin: Alignment.centerLeft,
@@ -74,22 +74,37 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                               ? MoviesConsts.cardImasgeUrl + state.movie!.backdropPath!
                               : MoviesConsts.placeholderImasgeUrl,
                         ),
-                      ),
-                      Positioned(
-                        left: AppSpacing.size04,
-                        top: 15,
-                        child: CachedNetworkImage(
-                          height: 150,
-                          imageUrl: state.movie!.posterPath != null
-                              ? MoviesConsts.cardImasgeUrl + state.movie!.posterPath!
-                              : MoviesConsts.placeholderImasgeUrl,
-                          placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
-                        ),
-                      ),
-                    ],
+                      );
+                    }),
+                Positioned(
+                  left: AppSpacing.size04,
+                  top: 15,
+                  child: Hero(
+                    tag: widget.movieId,
+                    child: CachedNetworkImage(
+                      height: 150,
+                      imageUrl: widget.posterPath != null
+                          ? MoviesConsts.cardImasgeUrl + widget.posterPath!
+                          : MoviesConsts.placeholderImasgeUrl,
+                      placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
+                    ),
                   ),
                 ),
-                SliverFillRemaining(
+              ],
+            ),
+          ),
+          BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+              bloc: _movieDetailsBloc,
+              builder: (context, state) {
+                if (state.status == MovieDetailsStatus.loading) {
+                  return const SliverFillRemaining(
+                    child: Center(
+                      child: CircularProgressIndicator(color: AppColors.background),
+                    ),
+                  );
+                }
+
+                return SliverFillRemaining(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
                     child: Column(
@@ -111,10 +126,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       ],
                     ),
                   ),
-                )
-              ],
-            );
-          }),
+                );
+              })
+        ],
+      ),
     );
   }
 }

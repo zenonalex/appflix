@@ -27,6 +27,7 @@ abstract class $AppRouter extends _i3.RootStackRouter {
         child: _i1.MovieDetailsScreen(
           key: args.key,
           movieId: args.movieId,
+          posterPath: args.posterPath,
         ),
       );
     },
@@ -45,12 +46,14 @@ class MovieDetailsRoute extends _i3.PageRouteInfo<MovieDetailsRouteArgs> {
   MovieDetailsRoute({
     _i4.Key? key,
     required int movieId,
+    required String? posterPath,
     List<_i3.PageRouteInfo>? children,
   }) : super(
           MovieDetailsRoute.name,
           args: MovieDetailsRouteArgs(
             key: key,
             movieId: movieId,
+            posterPath: posterPath,
           ),
           initialChildren: children,
         );
@@ -65,15 +68,18 @@ class MovieDetailsRouteArgs {
   const MovieDetailsRouteArgs({
     this.key,
     required this.movieId,
+    required this.posterPath,
   });
 
   final _i4.Key? key;
 
   final int movieId;
 
+  final String? posterPath;
+
   @override
   String toString() {
-    return 'MovieDetailsRouteArgs{key: $key, movieId: $movieId}';
+    return 'MovieDetailsRouteArgs{key: $key, movieId: $movieId, posterPath: $posterPath}';
   }
 }
 

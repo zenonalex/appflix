@@ -32,12 +32,15 @@ class MovieCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(AppSpacing.size)),
-                  child: CachedNetworkImage(
-                    height: 225,
-                    imageUrl: movie.posterPath != null
-                        ? MoviesConsts.cardImasgeUrl + movie.posterPath!
-                        : MoviesConsts.placeholderImasgeUrl,
-                    placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
+                  child: Hero(
+                    tag: movie.id,
+                    child: CachedNetworkImage(
+                      height: 225,
+                      imageUrl: movie.posterPath != null
+                          ? MoviesConsts.cardImasgeUrl + movie.posterPath!
+                          : MoviesConsts.placeholderImasgeUrl,
+                      placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
+                    ),
                   ),
                 ),
                 const SizedBox(height: AppSpacing.size04),
