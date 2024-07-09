@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Person extends Equatable {
-  final String profilePath;
+  final String? profilePath;
   final String name;
   final String character;
   final String knownForDepartment;

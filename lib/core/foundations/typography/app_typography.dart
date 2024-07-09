@@ -90,4 +90,16 @@ mixin AppTypography {
     fontFamily: "PTSans",
     fontWeight: FontWeight.bold,
   );
+  static const cardTitle = TextStyle(
+    fontSize: 14,
+    color: AppColors.secondaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.normal,
+  );
+  static const cardTitleBold = TextStyle(
+    fontSize: 14,
+    color: AppColors.secondaryText,
+    fontFamily: "PTSans",
+    fontWeight: FontWeight.bold,
+  );
 }

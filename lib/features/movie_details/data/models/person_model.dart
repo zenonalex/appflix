@@ -8,7 +8,7 @@ part 'person_model.g.dart';
 @JsonSerializable(createToJson: false)
 class PersonModel extends Equatable {
   @JsonKey(name: "profile_path")
-  final String profilePath;
+  final String? profilePath;
   final String name;
   final String character;
   @JsonKey(name: "known_for_department")

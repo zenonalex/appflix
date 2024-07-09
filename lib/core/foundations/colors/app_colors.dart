@@ -10,6 +10,7 @@ mixin AppColors {
   static const lowRate = Color(0xFFf80707);
   static const mediumRate = Color(0xFFe7e938);
   static const higRate = Color(0xFF25c974);
+  static const border = Color(0xFFD3D3D3);
 
   // Text
   static const primaryText = Color(0xFFFFFFFF);

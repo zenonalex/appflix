@@ -12,6 +12,7 @@ import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
 import '../../../../di.dart';
 import '../bloc/movie_details_bloc.dart';
+import '../widget/cast_card.dart';
 
 @RoutePage()
 class MovieDetailsScreen extends StatefulWidget {
@@ -29,7 +30,9 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   void initState() {
-    _movieDetailsBloc.add(GetMovieDetailsEvent(movieId: widget.movieId));
+    _movieDetailsBloc
+      ..add(GetMovieDetailsEvent(movieId: widget.movieId))
+      ..add(GetMovieCreditsEvent(movieId: widget.movieId));
     super.initState();
   }
 
@@ -94,40 +97,85 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
           ),
           BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
-              bloc: _movieDetailsBloc,
-              builder: (context, state) {
-                if (state.detailsStatus == MovieDetailsStatus.loading) {
-                  return const SliverFillRemaining(
-                    child: Center(
-                      child: CircularProgressIndicator(color: AppColors.background),
-                    ),
-                  );
-                }
-
-                return SliverFillRemaining(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: AppSpacing.size04),
-                        Center(child: Text(state.movie!.originalTitle, style: AppTypography.title)),
-                        const SizedBox(height: AppSpacing.size04),
-                        Row(
-                          children: [
-                            VoteIndicator(voteAverage: state.movie!.voteAverage),
-                            const SizedBox(width: AppSpacing.size04),
-                            const Text("User score", style: AppTypography.subtitleBold),
-                          ],
-                        ),
-                        const SizedBox(height: AppSpacing.size04),
-                        const Text("Overview", style: AppTypography.title),
-                        Text(state.movie!.overview, style: AppTypography.subtitle),
-                      ],
-                    ),
+            bloc: _movieDetailsBloc,
+            builder: (context, state) {
+              if (state.detailsStatus == MovieDetailsStatus.loading) {
+                return const SliverToBoxAdapter(
+                  child: Center(
+                    child: CircularProgressIndicator(color: AppColors.background),
                   ),
                 );
-              })
+              }
+
+              return SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.size04),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: AppSpacing.size04),
+                      Center(child: Text(state.movie!.originalTitle, style: AppTypography.title)),
+                      const SizedBox(height: AppSpacing.size04),
+                      Row(
+                        children: [
+                          VoteIndicator(voteAverage: state.movie!.voteAverage),
+                          const SizedBox(width: AppSpacing.size04),
+                          const Text("User score", style: AppTypography.subtitleBold),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.size04),
+                      const Text("Overview", style: AppTypography.title),
+                      Text(state.movie!.overview, style: AppTypography.subtitle),
+                      const SizedBox(height: AppSpacing.size04),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Container(
+              color: AppColors.background,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: AppSpacing.size04),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.size04),
+                    child: Text("Top Billed Cast", style: AppTypography.collectionTitle),
+                  ),
+                  const SizedBox(height: AppSpacing.size04),
+                  BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
+                      bloc: _movieDetailsBloc,
+                      builder: (context, state) {
+                        if (state.creditsStatus == MovieCreditsStatus.loading) {
+                          return const Center(
+                            child: CircularProgressIndicator(color: AppColors.background),
+                          );
+                        }
+                        return SizedBox(
+                          height: 250,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: state.cast!.cast.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  left: index == 0 ? AppSpacing.size04 : 0.0,
+                                  right: AppSpacing.size04,
+                                ),
+                                child: CastCard(person: state.cast!.cast[index]),
+                              );
+                            },
+                          ),
+                        );
+                      }),
+                  const SizedBox(height: AppSpacing.size10),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
