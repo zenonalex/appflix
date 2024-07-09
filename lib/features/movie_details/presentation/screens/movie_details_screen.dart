@@ -73,7 +73,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           imageUrl: state.movie?.backdropPath != null
                               ? MoviesConsts.cardImasgeUrl + state.movie!.backdropPath!
                               : MoviesConsts.placeholderImasgeUrl,
-                          placeholder: (_, __) => Image.asset(AppImages.imagePlaceholder),
                         ),
                       ),
                       Positioned(
