@@ -21,6 +21,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
+      centerTitle: true,
       leading: widget.hasBackButton
           ? GestureDetector(
               onTap: () {
