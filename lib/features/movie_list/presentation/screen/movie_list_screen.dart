@@ -8,6 +8,7 @@ import '../../../../core/foundations/colors/app_colors.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
+import '../../../../core/navigation/router.gr.dart';
 import '../../../../di.dart';
 import '../../utils/movie_list_type.dart';
 import '../bloc/movie_list_bloc.dart';
@@ -141,7 +142,12 @@ class _MovieListScreenState extends State<MovieListScreen> {
                                       left: index == 0 ? AppSpacing.size04 : 0.0,
                                       right: AppSpacing.size04,
                                     ),
-                                    child: MovieCard(movie: state.movies[index]),
+                                    child: MovieCard(
+                                      movie: state.movies[index],
+                                      onPressed: () {
+                                        context.pushRoute(MovieDetailsRoute(movieId: state.movies[index].id));
+                                      },
+                                    ),
                                   );
                                 },
                               ),

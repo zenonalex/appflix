@@ -7,5 +7,6 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: MovieListRoute.page, initial: true),
+        AutoRoute(page: MovieDetailsRoute.page),
       ];
 }
