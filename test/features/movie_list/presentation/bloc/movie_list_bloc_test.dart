@@ -68,5 +68,57 @@ void main() {
         ),
       ],
     );
+
+    blocTest(
+      'should emit [MovieListState.loading, MovieListState.success]'
+      ' when [GetMovieListEvent] return a [Left]',
+      setUp: () {
+        when(() => usecase(type: any(named: 'type'), page: any(named: 'page'), query: any(named: 'query')))
+            .thenAnswer((_) async => Right(movieList));
+      },
+      build: () => bloc,
+      act: (MovieListBloc bloc) => bloc.add(const GetMovieListEvent(type: MovieListType.popular, term: 'Teste')),
+      expect: () => [
+        const MovieListState(status: MovieListStatus.loading),
+        MovieListState(
+          status: MovieListStatus.success,
+          movies: movieList.results,
+          page: movieList.page,
+          totalPages: movieList.totalPages,
+          totalResults: movieList.totalResults,
+          searchTerm: "Teste",
+        ),
+      ],
+    );
+  });
+
+  group("[ResetSearchListEvent] - ", () {
+    blocTest(
+      'should emit [MovieListState.loading, MovieListState.success]'
+      ' when [GetMovieListEvent] return a [Left]',
+      setUp: () {
+        when(() => usecase(type: any(named: 'type'), page: any(named: 'page')))
+            .thenAnswer((_) async => Right(movieList));
+      },
+      build: () => bloc,
+      act: (MovieListBloc bloc) => bloc.add(ResetSearchListEvent()),
+      expect: () => [
+        const MovieListState(
+          movieListType: MovieListType.popular,
+          movies: [],
+          page: 0,
+          totalPages: 0,
+          totalResults: 0,
+          searchTerm: null,
+        ),
+        MovieListState(
+          status: MovieListStatus.success,
+          movies: movieList.results,
+          page: movieList.page,
+          totalPages: movieList.totalPages,
+          totalResults: movieList.totalResults,
+        ),
+      ],
+    );
   });
 }
