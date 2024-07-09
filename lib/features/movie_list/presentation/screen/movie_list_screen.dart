@@ -121,31 +121,42 @@ class _MovieListScreenState extends State<MovieListScreen> {
                               );
                             }
 
-                            return SizedBox(
-                              height: 350,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                controller: _scrollController,
-                                itemCount: state.movies.length,
-                                itemBuilder: (context, index) {
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                      left: index == 0 ? AppSpacing.size04 : 0.0,
-                                      right: AppSpacing.size04,
-                                    ),
-                                    child: MovieCard(
-                                      movie: state.movies[index],
-                                      onPressed: () {
-                                        AutoRouter.of(context).push(
-                                          MovieDetailsRoute(
-                                            movieId: state.movies[index].id,
-                                            posterPath: state.movies[index].posterPath,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
+                            return ShaderMask(
+                              shaderCallback: (Rect bounds) {
+                                return const LinearGradient(
+                                  begin: Alignment.centerRight,
+                                  end: Alignment.center,
+                                  colors: [Colors.transparent, Colors.black],
+                                  stops: [0.0, 0.1],
+                                ).createShader(bounds);
+                              },
+                              blendMode: BlendMode.dstIn,
+                              child: SizedBox(
+                                height: 350,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  controller: _scrollController,
+                                  itemCount: state.movies.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                        left: index == 0 ? AppSpacing.size04 : 0.0,
+                                        right: AppSpacing.size04,
+                                      ),
+                                      child: MovieCard(
+                                        movie: state.movies[index],
+                                        onPressed: () {
+                                          AutoRouter.of(context).push(
+                                            MovieDetailsRoute(
+                                              movieId: state.movies[index].id,
+                                              posterPath: state.movies[index].posterPath,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                             );
                           }),
