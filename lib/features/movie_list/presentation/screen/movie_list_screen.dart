@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/foundations/colors/app_colors.dart';
+import '../../../../commons/widgets/custom_app_bar.dart';
 import '../../../../core/foundations/images/app_images.dart';
 import '../../../../core/foundations/spacings/app_spacing.dart';
 import '../../../../core/foundations/typography/app_typography.dart';
@@ -53,14 +53,7 @@ class _MovieListScreenState extends State<MovieListScreen> {
         },
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              backgroundColor: AppColors.main,
-              title: SvgPicture.asset(
-                AppImages.logo,
-                height: 30,
-              ),
-              floating: true,
-            ),
+            const CustomAppBar(),
             SliverToBoxAdapter(
               child: Stack(
                 children: [
