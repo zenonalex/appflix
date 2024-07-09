@@ -66,10 +66,15 @@ Follow the steps below to set up and run the project locally.
 3. **Generate necessary code (if applicable)**
 
    ```bash
-   flutter pub run build_runner build --delete-conflicting-outputs
+   make build_runner
 
-3. **Configure environment variables**
+4. **Configure environment variables**
 
    - Copy the .env.example file to a new .env file
+
+5. **App Test Coverage**
+
+   ```bash
+   make app_coverage
 
 
