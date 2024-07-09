@@ -54,7 +54,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                 BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
                     bloc: _movieDetailsBloc,
                     builder: (context, state) {
-                      if (state.status == MovieDetailsStatus.loading) {
+                      if (state.detailsStatus == MovieDetailsStatus.loading) {
                         return const SizedBox(height: 180);
                       }
                       return ShaderMask(
@@ -96,7 +96,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
           BlocBuilder<MovieDetailsBloc, MovieDetailsState>(
               bloc: _movieDetailsBloc,
               builder: (context, state) {
-                if (state.status == MovieDetailsStatus.loading) {
+                if (state.detailsStatus == MovieDetailsStatus.loading) {
                   return const SliverFillRemaining(
                     child: Center(
                       child: CircularProgressIndicator(color: AppColors.background),

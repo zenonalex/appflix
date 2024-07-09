@@ -12,3 +12,9 @@ class GetMovieDetailsEvent extends MovieDetailsEvent {
 
   const GetMovieDetailsEvent({required this.movieId});
 }
+
+class GetMovieCreditsEvent extends MovieDetailsEvent {
+  final int movieId;
+
+  const GetMovieCreditsEvent({required this.movieId});
+}

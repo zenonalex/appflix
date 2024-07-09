@@ -1,0 +1,33 @@
+{
+    "id":1022789,
+    "cast":[
+       {
+          "adult":false,
+          "gender":1,
+          "id":56322,
+          "known_for_department":"Acting",
+          "name":"Amy Poehler",
+          "original_name":"Amy Poehler",
+          "popularity":30.723,
+          "profile_path":"/rwmvRonpluV6dCPiQissYrchvSD.jpg",
+          "cast_id":4,
+          "character":"Joy (voice)",
+          "credit_id":"631bd7450bb076007b78d023",
+          "order":0
+       },
+       {
+          "adult":false,
+          "gender":1,
+          "id":1903874,
+          "known_for_department":"Acting",
+          "name":"Maya Hawke",
+          "original_name":"Maya Hawke",
+          "popularity":33.197,
+          "profile_path":"/zv9RlbPcG5Xle1LUp0Q7vyHrPK2.jpg",
+          "cast_id":7,
+          "character":"Anxiety (voice)",
+          "credit_id":"654ce72cd4653700c4e31b8c",
+          "order":1
+       }
+    ]
+ }

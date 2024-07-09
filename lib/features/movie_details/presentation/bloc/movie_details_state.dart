@@ -2,28 +2,39 @@ part of 'movie_details_bloc.dart';
 
 enum MovieDetailsStatus { loading, success, failure }
 
+enum MovieCreditsStatus { loading, success, failure }
+
 final class MovieDetailsState extends Equatable {
   final Movie? movie;
-  final MovieDetailsStatus status;
+  final Cast? cast;
+  final MovieDetailsStatus detailsStatus;
+  final MovieCreditsStatus creditsStatus;
 
   const MovieDetailsState({
-    this.status = MovieDetailsStatus.loading,
+    this.detailsStatus = MovieDetailsStatus.loading,
+    this.cast,
     this.movie,
+    this.creditsStatus = MovieCreditsStatus.loading,
   });
 
   MovieDetailsState copyWith({
     Movie? movie,
-    MovieDetailsStatus? status,
+    MovieDetailsStatus? detailsStatus,
+    Cast? cast,
+    MovieCreditsStatus? creditsStatus,
   }) {
     return MovieDetailsState(
-      status: status ?? this.status,
-      movie: movie ?? this.movie,
-    );
+        detailsStatus: detailsStatus ?? this.detailsStatus,
+        movie: movie ?? this.movie,
+        cast: cast ?? this.cast,
+        creditsStatus: creditsStatus ?? this.creditsStatus);
   }
 
   @override
   List<Object?> get props => [
-        status,
+        detailsStatus,
         movie,
+        cast,
+        creditsStatus,
       ];
 }
