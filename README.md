@@ -77,4 +77,9 @@ Follow the steps below to set up and run the project locally.
    ```bash
    make app_coverage
 
+6. **Rune**
+
+   ```bash
+   flutter run
+
 
