@@ -2,7 +2,7 @@
 
 An app that lists popular or trending movies and allows searching by terms.
 
-[![Video Title](https://i.ibb.co/yVT3CzX/Screenshot-2024-07-10-at-10-25-12-AM.png)](https://youtu.be/3xRmusVdJOM)
+[![Video Title](https://img.youtube.com/vi/3xRmusVdJOM/0.jpg)](https://www.youtube.com/watch?v=3xRmusVdJOM)
 
 ## Technologies Used
 
