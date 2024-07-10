@@ -2,6 +2,8 @@
 
 An app that lists popular or trending movies and allows searching by terms.
 
+[![Video Title](https://i.ibb.co/GMxfQQk/Simulator-Screenshot-i-Phone-14-2024-07-10-at-10-20-26.png)](https://youtu.be/3xRmusVdJOM)
+
 ## Technologies Used
 
 This project uses the following technologies and packages:
